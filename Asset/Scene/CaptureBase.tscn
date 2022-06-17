@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Asset/Scene/Team.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Asset/Character/base1n.png" type="Texture" id=2]
+[ext_resource path="res://Asset/Character/base1.png" type="Texture" id=3]
+[ext_resource path="res://Asset/Script/CaptureBase.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 100.25, 90.75 )
+
+[node name="CaptureBase" type="Area2D"]
+position = Vector2( 200, 280 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -0.999969, 3.05176e-05 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 3 )
+normal_map = ExtResource( 2 )
+
+[node name="Team" parent="." instance=ExtResource( 1 )]
+position = Vector2( -1, 0 )
+
+[node name="CaptureTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[connection signal="body_entered" from="." to="." method="_on_CaptureBase_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_CaptureBase_body_exited"]
+[connection signal="timeout" from="CaptureTimer" to="." method="_on_CaptureTimer_timeout"]
